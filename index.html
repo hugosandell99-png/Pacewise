@@ -1,9 +1,94 @@
 <!doctype html>
 <html lang="sv">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#101411"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Pacewise"><title>Pacewise — din löpcoach</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="theme-color" content="#f7f4ec"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="Pacewise"><title>Pacewise — din löpcoach</title>
 <style>
 :root{--bg:#101411;--panel:#191f1b;--panel2:#202822;--line:#303a32;--text:#f2f5ef;--muted:#9aa69b;--lime:#c6f36b;--lime2:#a8d94f;--orange:#ffb86b;--red:#ff8585;--radius:20px}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top right,#233126 0%,var(--bg) 45%);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-size:15px;padding-bottom:calc(88px + env(safe-area-inset-bottom))}button,input,select,textarea{font:inherit}button{cursor:pointer}.app{max-width:760px;margin:auto;padding:20px 16px 30px}.top{display:flex;align-items:center;justify-content:space-between;margin:6px 0 22px}.brand{display:flex;gap:10px;align-items:center;font-size:20px;font-weight:800;letter-spacing:-.5px}.logo{width:38px;height:38px;border-radius:13px;background:var(--lime);display:grid;place-items:center;color:#172012;font-weight:900}.eyebrow{color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:1.5px;font-weight:700}.pill{border:1px solid var(--line);border-radius:99px;padding:7px 10px;color:var(--muted);font-size:12px}.greeting{margin-bottom:20px}.greeting h1{font-size:30px;letter-spacing:-1.1px;line-height:1.08;margin:7px 0}.greeting p{color:var(--muted);margin:8px 0 0;line-height:1.5}.hero{background:linear-gradient(135deg,#c6f36b,#9ed34c);color:#172012;border-radius:24px;padding:20px;margin-bottom:14px;position:relative;overflow:hidden}.hero:after{content:'↗';position:absolute;right:18px;top:12px;font-size:76px;font-weight:200;opacity:.13}.hero .eyebrow{color:#3f5726}.hero h2{font-size:23px;letter-spacing:-.7px;margin:8px 0}.hero p{max-width:80%;line-height:1.45;margin:0 0 16px;color:#34452a}.hero button{background:#172012;color:#fff;border:0;border-radius:12px;padding:12px 15px;font-weight:700}.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}.stat,.card{background:var(--panel);border:1px solid #283129;border-radius:var(--radius);padding:15px}.stat .value{font-size:24px;font-weight:800;letter-spacing:-.8px;margin:7px 0 4px}.stat .unit{font-size:12px;color:var(--muted)}.section-head{display:flex;justify-content:space-between;align-items:center;margin:25px 2px 12px}.section-head h2{font-size:18px;margin:0;letter-spacing:-.4px}.linkbtn{border:0;background:transparent;color:var(--lime);font-weight:700;padding:6px}.card{margin-bottom:12px}.empty{padding:22px 12px;text-align:center;color:var(--muted);line-height:1.5}.empty strong{display:block;color:var(--text);margin-bottom:5px}.workout{display:flex;justify-content:space-between;gap:10px;padding:13px 0;border-bottom:1px solid var(--line)}.workout:last-child{border-bottom:0;padding-bottom:0}.workout:first-child{padding-top:0}.wname{font-weight:700}.sub{color:var(--muted);font-size:12px;margin-top:5px}.wmetrics{text-align:right;white-space:nowrap}.wmetrics strong{display:block;font-size:17px}.wmetrics span{font-size:12px;color:var(--muted)}.bar{height:7px;background:#303a32;border-radius:99px;overflow:hidden;margin:12px 0 7px}.bar span{display:block;height:100%;background:var(--lime);border-radius:99px}.chart{height:120px;width:100%;display:block;margin-top:10px}.nav{position:fixed;bottom:0;left:0;right:0;background:rgba(16,20,17,.94);backdrop-filter:blur(18px);border-top:1px solid #2a332c;padding:9px 8px calc(9px + env(safe-area-inset-bottom));display:flex;justify-content:center;z-index:5}.navin{display:flex;max-width:760px;width:100%;justify-content:space-around}.nav button{background:transparent;border:0;color:var(--muted);display:flex;align-items:center;flex-direction:column;gap:4px;font-size:10px;min-width:58px;padding:5px}.nav button span{font-size:20px}.nav button.active{color:var(--lime)}.view{display:none}.view.active{display:block}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:flex;flex-direction:column;gap:7px;margin-bottom:13px}.field label{font-size:12px;color:var(--muted);font-weight:650}.field input,.field select,.field textarea{width:100%;background:#111612;border:1px solid var(--line);color:var(--text);padding:13px 12px;border-radius:12px;outline:none;min-width:0}.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--lime)}.primary,.secondary,.danger{border:0;border-radius:13px;padding:13px 16px;font-weight:750}.primary{background:var(--lime);color:#182013}.secondary{background:var(--panel2);color:var(--text);border:1px solid var(--line)}.danger{background:#402526;color:#ffb5b5}.actions{display:flex;gap:9px;flex-wrap:wrap}.actions button{flex:1}.notice{font-size:12px;color:var(--muted);line-height:1.5;margin:12px 0}.tag{display:inline-block;border-radius:8px;background:#2d382c;color:var(--lime);font-size:11px;font-weight:700;padding:5px 8px}.result{border-left:3px solid var(--lime);padding:10px 13px;background:#202820;border-radius:0 12px 12px 0;line-height:1.5;margin-top:12px}.planitem{display:flex;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}.planitem:last-child{border:0}.day{width:43px;flex-shrink:0;color:var(--lime);font-weight:800;font-size:12px;padding-top:3px}.planitem strong{display:block;margin-bottom:4px}.planitem p{margin:0;color:var(--muted);font-size:13px;line-height:1.45}.smallbtn{background:transparent;border:1px solid var(--line);color:var(--muted);border-radius:8px;padding:6px 8px;font-size:11px}.footer{text-align:center;color:#748076;font-size:11px;margin:28px 0 5px}.hidden{display:none!important}@media(min-width:600px){.app{padding:28px 24px}.greeting h1{font-size:36px}.stat,.card{padding:19px}}
+
+/* PACEWISE PLAYFUL REDESIGN */
+:root{
+ --bg:#f7f4ec;--panel:#fffdf8;--panel2:#f0eee5;--line:#e6e0d4;
+ --text:#202c3a;--muted:#718078;--lime:#d8f36a;--lime2:#c2e84d;
+ --orange:#ff8a68;--red:#e76d68;--radius:22px;
+}
+html{background:var(--bg)}
+body{
+ background:
+   radial-gradient(circle at 92% 4%,rgba(255,138,104,.18) 0 75px,transparent 76px),
+   radial-gradient(circle at 4% 23%,rgba(216,243,106,.24) 0 95px,transparent 96px),
+   var(--bg);
+ color:var(--text);font-family:ui-rounded,"SF Pro Rounded",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+.app{padding:18px 16px 34px}
+.top{margin:4px 0 26px}
+.brand{font-size:22px;letter-spacing:-.8px}
+.logo{width:42px;height:42px;border-radius:15px;background:var(--text);color:var(--lime);transform:rotate(-4deg);box-shadow:3px 4px 0 rgba(32,44,58,.12)}
+.eyebrow{color:#798579;letter-spacing:1.2px;font-size:10px}
+.pill{border:1px solid #e2dbce;background:rgba(255,253,248,.7);color:#69766d}
+.greeting{margin-bottom:23px}
+.greeting h1{font-size:34px;letter-spacing:-1.5px;line-height:1.02;max-width:340px}
+.greeting p{color:#6f7c73;max-width:390px}
+.hero{
+ background:#d9f36f;color:#243128;border:0;border-radius:28px;padding:23px 21px 21px;
+ box-shadow:0 7px 0 #b9d957; margin-bottom:18px;
+}
+.hero:after{content:'✳';right:12px;top:3px;font-size:92px;color:#718c29;opacity:.22;transform:rotate(12deg)}
+.hero .eyebrow{color:#53672a}
+.hero h2{font-size:26px;letter-spacing:-1px;max-width:270px}
+.hero p{color:#41522e}
+.hero button{background:#243128;color:#f9ffe9;border-radius:999px;padding:13px 18px;box-shadow:0 3px 0 rgba(36,49,40,.15)}
+.stats{gap:9px;margin:17px 0}
+.stat,.card{background:var(--panel);border:1px solid #e9e3d8;border-radius:22px;box-shadow:0 4px 0 rgba(38,49,56,.035)}
+.stat{padding:14px 12px;position:relative;overflow:hidden}
+.stat:nth-child(1){background:#fffdf8}
+.stat:nth-child(2){background:#fff0e8}
+.stat:nth-child(3){background:#eef4ff}
+.stat .value{font-size:25px;letter-spacing:-1px;color:#243128}
+.stat .unit{color:#718078}
+.section-head{margin:28px 2px 13px}
+.section-head h2{font-size:20px;letter-spacing:-.7px}
+.linkbtn{color:#334c8b}
+.card{padding:17px;margin-bottom:13px}
+.empty{color:#748078}
+.empty strong{color:var(--text)}
+.workout{border-color:#eee7dc}
+.wname{color:#26354a}
+.sub,.wmetrics span{color:#77847b}
+.wmetrics strong{color:#26354a}
+.bar{background:#eee9de;height:9px}
+.bar span{background:#f58d6e}
+.chart{height:135px}
+.nav{
+ background:rgba(255,253,248,.94);border-top:1px solid #e6e0d4;
+ box-shadow:0 -8px 28px rgba(49,55,46,.06);backdrop-filter:blur(18px);
+}
+.nav button{color:#879187;border-radius:14px;min-width:54px;font-weight:650}
+.nav button span{font-size:21px}
+.nav button.active{color:#26354a;background:#edf4d6}
+.formgrid{gap:10px}
+.field label{color:#6f7c73}
+.field input,.field select,.field textarea{
+ background:#fffdf8;border:1px solid #ded8cc;color:#243128;border-radius:13px;
+ box-shadow:inset 0 1px 2px rgba(25,35,28,.025)
+}
+input:focus,select:focus,textarea:focus{outline:3px solid rgba(194,232,77,.45);border-color:#a9ca4b}
+button:not(.nav button):not(.linkbtn){
+ transition:transform .15s ease,filter .15s ease;
+}
+button:not(.nav button):not(.linkbtn):active{transform:translateY(1px) scale(.99)}
+/* Soft color tags and friendly graphic accents */
+.badge,.tag,.status,.eyebrow-pill{border-radius:999px}
+@media(min-width:600px){
+ .app{padding-top:28px}
+ .greeting h1{font-size:40px}
+ .stats{gap:13px}
+ .stat{padding:18px}
+}
+@media(max-width:380px){
+ .stats{gap:7px}.stat{padding:12px 9px}.stat .value{font-size:22px}
+ .nav button{min-width:47px;font-size:9px}
+}
+
 </style></head><body><main class="app"><header class="top"><div class="brand"><div class="logo">P</div>pacewise</div><span class="pill">PERSONLIG LÖPCOACH</span></header>
 <section id="home" class="view active"><div class="greeting"><div class="eyebrow" id="todayLabel">DIN TRÄNING, DIN UTVECKLING</div><h1>Bygg din nästa<br>personbästa.</h1><p>Små steg. Smart träning. Långsiktig utveckling.</p></div><div class="hero"><div class="eyebrow">Ditt aktuella mål</div><h2 id="heroGoal">Sätt ditt första mål</h2><p id="heroText">Välj distans och måltid så hjälper vi dig att planera vägen dit.</p><button onclick="showView('goal')" id="heroButton">Sätt ett mål →</button></div><div class="stats"><div class="stat"><div class="eyebrow">Denna vecka</div><div class="value" id="weekKm">0,0</div><div class="unit">kilometer</div></div><div class="stat"><div class="eyebrow">Löppass</div><div class="value" id="weekRuns">0</div><div class="unit">denna vecka</div></div><div class="stat"><div class="eyebrow">Snittpuls</div><div class="value" id="avgHr">—</div><div class="unit">slag/min</div></div></div><div class="section-head"><h2>Veckans volym</h2><span class="pill">Senaste 6 veckor</span></div><div class="card"><svg id="volumeChart" class="chart" viewBox="0 0 320 120" preserveAspectRatio="none" aria-label="Träningsvolym senaste sex veckor"></svg><div style="display:flex;justify-content:space-between;color:var(--muted);font-size:11px"><span>Äldre</span><span>Nu</span></div></div><div class="section-head"><h2>Senaste pass</h2><button class="linkbtn" onclick="showView('log')">+ Lägg till</button></div><div class="card" id="recentRuns"></div><div class="section-head"><h2>Nästa steg</h2></div><div class="card" id="nextStep"><div class="empty"><strong>Börja med din baslinje</strong>Lägg in ett träningspass eller ett benchmarktest för att komma igång.</div></div></section>
 <section id="log" class="view"><div class="greeting"><div class="eyebrow">TRÄNINGSDAGBOK</div><h1>Logga ett pass.</h1><p>Fyll i det du vet. Puls och anteckningar är frivilliga.</p></div><form id="workoutForm" class="card"><div class="field"><label for="wDate">Datum</label><input id="wDate" type="date" required></div><div class="field"><label for="wType">Typ av pass</label><select id="wType"><option>Lugn löpning</option><option>Långpass</option><option>Intervaller</option><option>Tempo / tröskel</option><option>Tävling</option><option>Återhämtning</option><option>Trail / terräng</option><option>Annat</option></select></div><div class="formgrid"><div class="field"><label for="wDist">Sträcka (km)</label><input id="wDist" type="number" min="0.1" max="300" step="0.01" placeholder="5,0" required></div><div class="field"><label for="wTime">Tid (minuter)</label><input id="wTime" type="number" min="1" max="2000" step="0.1" placeholder="32" required></div><div class="field"><label for="wHr">Snittpuls (slag/min)</label><input id="wHr" type="number" min="40" max="230" placeholder="150"></div><div class="field"><label for="wRpe">Ansträngning (1–10)</label><select id="wRpe"><option value="">Välj (frivilligt)</option><option value="1">1 · Mycket lätt</option><option value="2">2</option><option value="3">3 · Lätt</option><option value="4">4</option><option value="5">5 · Måttlig</option><option value="6">6</option><option value="7">7 · Hårt</option><option value="8">8</option><option value="9">9</option><option value="10">10 · Max</option></select></div></div><div class="field"><label for="wNotes">Anteckningar (frivilligt)</label><textarea id="wNotes" rows="2" placeholder="Känsla, väder, underlag …"></textarea></div><button class="primary" type="submit" style="width:100%">Spara träningspass</button><p class="notice">Passet sparas lokalt i den här webbläsaren på din enhet.</p></form><div class="section-head"><h2>Alla pass</h2><button class="linkbtn" onclick="exportData()">Exportera data ↗</button></div><div class="card" id="allRuns"></div></section>
