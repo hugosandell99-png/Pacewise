@@ -411,25 +411,57 @@ function addMessage(text, who="assistant") {
 }
 function trainingContext() {
   const s=window.pacewiseState || {};
-  const workouts=(s.workouts||[]).slice().sort((a,b)=>(b.date||"").localeCompare(a.date||""));
-  const recent=workouts.filter(w=>w.date && (Date.now()-new Date(w.date+"T12:00:00").getTime())<=42*86400000);
-  const km=recent.reduce((n,w)=>n+(Number(w.distance)||0),0);
-  const avgPace=recent.filter(w=>w.distance>0&&w.minutes>0);
-  const pace=avgPace.length ? avgPace.reduce((n,w)=>n+w.minutes/w.distance,0)/avgPace.length : null;
-  const hr=recent.filter(w=>Number(w.hr)>0);
-  const benchmarks=(s.benchmarks||[]).slice(0,8).map(b=>({name:b.name,date:b.date,km:b.distance,minutes:b.minutes,hr:b.hr||null}));
-  const goal=s.goal||null, plan=(s.plan||[]).slice(0,3);
+  const workouts=(s.workouts||[]).filter(w=>w.date).slice().sort((a,b)=>b.date.localeCompare(a.date));
+  const today=new Date(); today.setHours(23,59,59,999);
+  const daysAgo=n=>{const d=new Date(today);d.setDate(d.getDate()-n);d.setHours(0,0,0,0);return d;};
+  const valid=w=>Number(w.distance)>0 && Number(w.minutes)>0;
+  const summarize=(list,label)=>{
+    const validRuns=list.filter(valid);
+    const km=validRuns.reduce((n,w)=>n+Number(w.distance),0);
+    const minutes=validRuns.reduce((n,w)=>n+Number(w.minutes),0);
+    const hrs=list.filter(w=>Number(w.hr)>0).map(w=>Number(w.hr));
+    const rpes=list.filter(w=>Number(w.rpe)>0).map(w=>Number(w.rpe));
+    const longest=validRuns.slice().sort((a,b)=>Number(b.distance)-Number(a.distance))[0];
+    const byType={};
+    validRuns.forEach(w=>{const t=String(w.type||'Övrigt').replace(/^Planerat:\s*/,'');byType[t]=(byType[t]||0)+Number(w.distance);});
+    return {period:label,numberOfSessions:list.length,totalKm:+km.toFixed(1),totalDurationMinutes:Math.round(minutes),
+      weightedAveragePaceMinPerKm:km?+(minutes/km).toFixed(2):null,
+      averageHeartRate:hrs.length?Math.round(hrs.reduce((a,b)=>a+b,0)/hrs.length):null,
+      averageEffortRPE:rpes.length?+(rpes.reduce((a,b)=>a+b,0)/rpes.length).toFixed(1):null,
+      longestSessionKm:longest?+Number(longest.distance).toFixed(1):null,distanceByType:Object.fromEntries(Object.entries(byType).map(([k,v])=>[k,+v.toFixed(1)]))};
+  };
+  const recent=n=>workouts.filter(w=>new Date(w.date+'T23:59:59')>=daysAgo(n)&&new Date(w.date+'T00:00:00')<=today);
+  const weekly=[];
+  for(let i=5;i>=0;i--){
+    const end=new Date(today);end.setDate(end.getDate()-i*7);
+    const start=new Date(end);start.setDate(start.getDate()-6);
+    const list=workouts.filter(w=>{const d=new Date(w.date+'T12:00:00');return d>=start&&d<=end;});
+    weekly.push({weekStart:start.toISOString().slice(0,10),...summarize(list,'7 dagar')});
+  }
+  const benchmarkTypes=['easy','long','threshold'];
+  const benchmarks=benchmarkTypes.map(type=>{
+    const b=(s.benchmarks||[]).filter(x=>x.type===type&&Number(x.distance)>0&&Number(x.minutes)>0).sort((a,b)=>b.date.localeCompare(a.date))[0];
+    return b?{category:type,date:b.date,distanceKm:b.distance,durationMinutes:b.minutes,paceMinPerKm:+(b.minutes/b.distance).toFixed(2),heartRate:b.hr||null}:null;
+  }).filter(Boolean);
+  const recent42=recent(42);
+  const plan=(s.plan||[]).slice(0,3).map(w=>({week:w.week,items:(w.items||[]).map(x=>({name:x.name,distanceKm:x.km,description:x.description||x.detail||null}))}));
   return {
-    summary:"Pacewise träningsdata. Använd endast dessa uppgifter och säg tydligt när data saknas.",
-    recentWorkoutCount:recent.length, recent42DayDistanceKm:Number(km.toFixed(1)),
-    averageRecordedPaceMinPerKm:pace?Number(pace.toFixed(2)):null,
-    averageHeartRate:hr.length?Math.round(hr.reduce((n,w)=>n+Number(w.hr),0)/hr.length):null,
-    latestWorkouts:workouts.slice(0,10).map(w=>({date:w.date,type:w.type,distanceKm:w.distance,minutes:w.minutes,heartRate:w.hr||null,rpe:w.rpe||null})),
-    benchmarks, goal, baseline:s.baseline||null, nextPlanWeeks:plan
+    dataQualityNote:"Beräkningar är gjorda deterministiskt från loggade pass. Saknade värden är null, inte noll. Distans och tid summeras; snittfart är viktad total tid dividerat med total distans.",
+    last7Days:summarize(recent(7),"senaste 7 dagarna"),
+    last28Days:summarize(recent(28),"senaste 28 dagarna"),
+    last42Days:summarize(recent42,"senaste 42 dagarna"),
+    weeklyTrendLast6Weeks:weekly,
+    latestWorkouts:workouts.slice(0,12).map(w=>({date:w.date,type:w.type,distanceKm:w.distance??null,durationMinutes:w.minutes??null,paceMinPerKm:valid(w)?+(Number(w.minutes)/Number(w.distance)).toFixed(2):null,heartRate:w.hr||null,rpe:w.rpe||null,notes:w.notes||null})),
+    benchmarkReferences:benchmarks,
+    goal:s.goal||null,
+    baseline:s.baseline||null,
+    planNextWeeks:plan,
+    planData:s.planData||null,
+    completedPlannedSessions:(s.completedPlan||[]).length
   };
 }
 function systemPrompt() {
-  return `Du är Pacewise, en försiktig och kunnig personlig löpcoach. Svara på svenska, konkret och vänligt. Använd träningsunderlaget nedan. Hitta aldrig på pass, tider, puls eller statistik. Om data saknas, säg det. Skilj mellan observation och rekommendation. Prioritera gradvis progression, återhämtning och skadeförebyggande träning. Diagnostisera inte skador eller sjukdomar. Håll svaren relativt korta och använd tydliga punkter vid behov.\n\nTRÄNINGSDATA:\n${JSON.stringify(trainingContext())}`;
+  return `Du är Pacewise, en försiktig och kunnig personlig löpcoach. Svara på svenska, konkret och vänligt. Använd de färdigberäknade analyserna i träningsunderlaget i första hand i stället för att räkna om rådata. Jämför perioder och veckotrend när det hjälper. Hitta aldrig på pass, tider, puls eller statistik. Om data saknas, säg det. Skilj mellan observation och rekommendation. Ange alltid vilken period en siffra gäller. Om underlaget inte räcker för att dra en slutsats, var tydlig med det. Prioritera gradvis progression, återhämtning och skadeförebyggande träning. Diagnostisera inte skador eller sjukdomar. Håll svaren relativt korta och använd tydliga punkter vid behov.\n\nTRÄNINGSDATA:\n${JSON.stringify(trainingContext())}`;
 }
 async function loadModel() {
   if(loading||engine)return;
